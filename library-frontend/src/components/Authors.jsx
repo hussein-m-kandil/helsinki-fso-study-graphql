@@ -47,47 +47,50 @@ const Authors = (props) => {
         </tbody>
       </table>
 
-      <h2>Set Birth Year</h2>
+      <h2>Set birthyear</h2>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          updateAuthor({ variables: { name, setBornTo: parseInt(year) } });
-          setName('');
-          setYear('');
-        }}
-      >
-        <div>
-          <label htmlFor='name'>Name: </label>
-          <select
-            id='name'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          >
-            <option value={''}>Select Name</option>
-            {authors.map((a) => (
-              <option key={a.id} value={a.name}>
-                {a.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor='year' style={{ color: name ? '' : 'gray' }}>
-            Birth Year:{' '}
-          </label>
-          <input
-            id='year'
-            type='text'
-            value={year}
-            onChange={(e) => setYear(e.target.value)}
-            disabled={!name}
-          />
-        </div>
-        <button type='submit' disabled={!name || !year}>
-          Submit
-        </button>
-      </form>
+      {props.authenticated ? (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            updateAuthor({ variables: { name, setBornTo: parseInt(year) } });
+            setName('');
+            setYear('');
+          }}
+        >
+          <div>
+            <label htmlFor='name'>Name: </label>
+            <select
+              id='name'
+              name='name'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            >
+              <option value={''}>Select Name</option>
+              {authors.map((a) => (
+                <option key={a.id} value={a.name}>
+                  {a.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label htmlFor='year' style={{ color: name ? '' : 'gray' }}>
+              born
+            </label>
+            <input
+              id='year'
+              type='text'
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+              disabled={!name}
+            />
+          </div>
+          <button type='submit' disabled={!name || !year}>
+            update author
+          </button>
+        </form>
+      ) : null}
     </div>
   );
 };
